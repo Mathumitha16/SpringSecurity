@@ -1,29 +1,35 @@
 package com.springsecurity.BankApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Getter
+@Setter
 @Entity
-@Table(name="customer")
-
 public class Customer {
+
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="id")
-    private Integer id;
-    @Column(name="email")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
+    @Column(name = "customer_id")
+    private int id;
+
+    private String name;
+
     private String email;
-    @Column(name="pwd")
-    private String password;
-    @Column(name="role")
+
+    @Column(name = "mobile_number")
+    private String mobileNumber;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private String pwd;
+
     private String role;
-    @Column(name="enabled")
-    private Boolean enabled;
-    @Column(name="Account_Not_Locked")
-    private Boolean accountNotLocked;
-    @Column(name="Credentials_Not_Expired")
-    private Boolean credentialsNotExpired;
-    @Column(name="Account_Non_Expired")
-    private Boolean accountNotExpired;
+
+    @Column(name = "create_dt")
+    private String createDt;
 }
