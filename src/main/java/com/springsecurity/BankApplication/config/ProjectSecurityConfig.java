@@ -32,7 +32,7 @@ public class ProjectSecurityConfig {
         @Bean
         public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
             http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/notices","/contacts","/register/**").permitAll()
+                    .requestMatchers("/notices","/contacts","/register/**","users/**").permitAll()
                     .anyRequest().authenticated()
             );
 

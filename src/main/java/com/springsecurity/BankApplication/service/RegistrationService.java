@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 public class RegistrationService {
     @Autowired
@@ -16,8 +18,9 @@ public class RegistrationService {
 
     public void  createCustomer(Customer customer){
 
-        String hash = pwdEncode.encode(customer.getPassword());
-        customer.setPassword(hash);
+        String hash = pwdEncode.encode(customer.getPwd());
+        customer.setPwd(hash);
+        customer.setCreateDt(new Date(System.currentTimeMillis()));
 
         customerRepository.save(customer);
 

@@ -17,6 +17,8 @@ public class Loans {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "loan_number")
+    @Getter
+    @Setter
     private int loanNumber;
 
     @Column(name = "customer_id")

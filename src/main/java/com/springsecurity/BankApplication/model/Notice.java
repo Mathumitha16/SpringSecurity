@@ -3,6 +3,8 @@ package com.springsecurity.BankApplication.model;
 import java.sql.Date;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -13,6 +15,8 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     @Column(name = "notice_id")
+    @Getter
+    @Setter
     private int noticeId;
 
     @Column(name = "notice_summary")
