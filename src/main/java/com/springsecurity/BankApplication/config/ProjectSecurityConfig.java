@@ -1,4 +1,6 @@
 package com.springsecurity.BankApplication.config;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
@@ -16,8 +18,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsConfigurationSource;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 import javax.sql.DataSource;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -27,11 +34,12 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class ProjectSecurityConfig {
 
+        ;
 
 
         @Bean
-        public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-            http.csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/notices","/contacts","/register/**","users/**").permitAll()
                     .anyRequest().authenticated()
             );

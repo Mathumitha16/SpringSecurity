@@ -9,6 +9,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "notice_details")
+@Getter
+@Setter
 public class Notice {
 
     @Id

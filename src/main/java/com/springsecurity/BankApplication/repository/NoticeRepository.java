@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    @Query(value = "from Notice n where CURDATE() BETWEEN noticBegDt AND noticEndDt")
+    @Query(value = "SELECT n from Notice n where CURRENT_DATE BETWEEN n.noticBegDt AND n.noticEndDt")
     List<Notice> findAllActiveNotices();
 
 }
