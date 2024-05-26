@@ -7,6 +7,8 @@ import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @Entity
@@ -25,11 +27,11 @@ public class Customer {
     @Column(name = "mobile_number")
     private String mobileNumber;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
 
     private String role;
 
     @Column(name = "create_dt")
-    private String createDt;
+    private Date createDt;
 }
