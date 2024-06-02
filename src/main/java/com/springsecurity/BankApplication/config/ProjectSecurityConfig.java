@@ -1,4 +1,5 @@
 package com.springsecurity.BankApplication.config;
+import com.springsecurity.BankApplication.filters.RequestAuthorisation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
@@ -39,7 +41,7 @@ public class ProjectSecurityConfig {
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            http.cors(withDefaults()).csrf(csrf-> csrf.ignoringRequestMatchers("/register","/contact")).authorizeHttpRequests((requests) -> requests
+            http.cors(withDefaults()).csrf(csrf-> csrf.ignoringRequestMatchers("/register","/contact")).addFilterBefore(new RequestAuthorisation(), BasicAuthenticationFilter.class).authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/notices","/contact","/register/**","users/**").permitAll()
                     .requestMatchers("/myAccount").hasRole("USER")
                     .requestMatchers("/myBalance").hasAnyRole("USER","ADMIN")
