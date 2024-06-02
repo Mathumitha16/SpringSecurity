@@ -1,5 +1,6 @@
 package com.springsecurity.BankApplication.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.Date;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,11 +29,16 @@ public class Customer {
     @Column(name = "mobile_number")
     private String mobileNumber;
 
-   // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String pwd;
 
     private String role;
 
     @Column(name = "create_dt")
     private Date createDt;
+
+    @JsonIgnore
+    @OneToMany(mappedBy="customer", fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
+
 }

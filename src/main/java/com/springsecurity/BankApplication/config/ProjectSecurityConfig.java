@@ -41,7 +41,11 @@ public class ProjectSecurityConfig {
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http.cors(withDefaults()).csrf(csrf-> csrf.ignoringRequestMatchers("/register","/contact")).authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/notices","/contact","/register/**","users/**").permitAll()
-                    .anyRequest().authenticated()
+                    .requestMatchers("/myAccount").hasRole("USER")
+                    .requestMatchers("/myBalance").hasAnyRole("USER","ADMIN")
+                    .requestMatchers("/myLoans").hasRole("USER")
+                    .requestMatchers("/myCards").hasRole("USER")
+                    .requestMatchers("/user").authenticated()
             );
 
             http.formLogin(withDefaults());
