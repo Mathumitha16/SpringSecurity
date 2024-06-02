@@ -39,8 +39,8 @@ public class ProjectSecurityConfig {
 
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-            http.cors(withDefaults()).csrf(AbstractHttpConfigurer::disable).authorizeHttpRequests((requests) -> requests
-                    .requestMatchers("/notices","/contacts","/register/**","users/**").permitAll()
+            http.cors(withDefaults()).csrf(csrf-> csrf.ignoringRequestMatchers("/register","/contact")).authorizeHttpRequests((requests) -> requests
+                    .requestMatchers("/notices","/contact","/register/**","users/**").permitAll()
                     .anyRequest().authenticated()
             );
 
