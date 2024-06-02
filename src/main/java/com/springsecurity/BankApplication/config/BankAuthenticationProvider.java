@@ -1,5 +1,6 @@
 package com.springsecurity.BankApplication.config;
 
+import com.springsecurity.BankApplication.model.Authority;
 import com.springsecurity.BankApplication.model.Customer;
 import com.springsecurity.BankApplication.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 public class BankAuthenticationProvider implements AuthenticationProvider {
@@ -24,6 +26,17 @@ public class BankAuthenticationProvider implements AuthenticationProvider {
     CustomerRepository customerRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    public List<GrantedAuthority> GenerateGrantedAuthority( Set<Authority> authority){
+
+        return authority.stream().map(a->{
+            GrantedAuthority auth = new SimpleGrantedAuthority(a.getName());
+
+        return auth; }).toList();
+
+
+
+
+    }
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
@@ -34,12 +47,13 @@ public class BankAuthenticationProvider implements AuthenticationProvider {
         }
         else{
             String pwd = customer.getPwd();
-            List<GrantedAuthority> authorities = new ArrayList<>();
-            SimpleGrantedAuthority auth = new SimpleGrantedAuthority(customer.getRole());
-            authorities.add(auth);
+
+
            if(passwordEncoder.matches(userEnteredPassword,pwd)){
 
-               return new UsernamePasswordAuthenticationToken(email,pwd,authorities);
+
+
+               return new UsernamePasswordAuthenticationToken(email,pwd,GenerateGrantedAuthority(customer.getAuthorities()));
 
            }
            else {
@@ -47,6 +61,7 @@ public class BankAuthenticationProvider implements AuthenticationProvider {
            }
 
         }
+
     }
 
     @Override
