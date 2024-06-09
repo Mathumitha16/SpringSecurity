@@ -17,6 +17,7 @@ public class CorsConfig {
         cors.setAllowedOrigins(Collections.singletonList("http://localhost:4200/"));
         cors.setAllowedMethods(Collections.singletonList("*"));
         cors.setAllowedHeaders(Collections.singletonList("*"));
+        cors.setExposedHeaders(Collections.singletonList("Authorization"));
         cors.setAllowCredentials(true);
         cors.setMaxAge(3600L);
         source.registerCorsConfiguration("/**", cors);
