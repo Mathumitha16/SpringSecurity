@@ -1,5 +1,6 @@
 package com.springsecurity.BankApplication.config;
 import com.springsecurity.BankApplication.filters.JwtTokenGenerator;
+import com.springsecurity.BankApplication.filters.JwtTokenValidator;
 import com.springsecurity.BankApplication.filters.RequestAuthorisation;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,7 @@ public class ProjectSecurityConfig {
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             ).cors(withDefaults()).csrf(csrf-> csrf.ignoringRequestMatchers("/register","/contact")).addFilterBefore(new RequestAuthorisation(), BasicAuthenticationFilter.class)
                     .addFilterAfter(new JwtTokenGenerator(),BasicAuthenticationFilter.class)
+                    .addFilterBefore(new JwtTokenValidator(),BasicAuthenticationFilter.class)
                     .authorizeHttpRequests((requests) -> requests
                     .requestMatchers("/notices","/contact","/register/**","users/**").permitAll()
                     .requestMatchers("/myAccount").hasRole("USER")
